@@ -1,9 +1,9 @@
 -- phpMyAdmin SQL Dump
--- version 3.4.7
+-- version 3.4.5
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Feb 18, 2012 at 04:08 AM
+-- Generation Time: Sep 18, 2015 at 06:39 AM
 -- Server version: 5.5.16
 -- PHP Version: 5.3.8
 
@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS `comment` (
   `comment_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `user_id` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`comment_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
 
 --
 -- Dumping data for table `comment`
@@ -43,7 +43,11 @@ CREATE TABLE IF NOT EXISTS `comment` (
 
 INSERT INTO `comment` (`comment_id`, `entry_id`, `comment_name`, `comment_email`, `comment_body`, `comment_date`, `user_id`) VALUES
 (1, 1, 'administrator', 'admin@admin.com', 'Test comment. Continually matrix process-centric markets via web-enabled niche markets.', '2012-02-09 03:39:48', 1),
-(2, 1, 'Tester 1', 'a@a.com', 'Vestibulum venenatis. Nulla vel ipsum. Proin rutrum, urna sit amet bibendum pellentesque.', '2012-02-09 03:40:39', 0);
+(2, 1, 'Tester 1', 'a@a.com', 'Vestibulum venenatis. Nulla vel ipsum. Proin rutrum, urna sit amet bibendum pellentesque.', '2012-02-09 03:40:39', 0),
+(3, 1, 'design', 'thanhgiang@gmail.com', '?ây la 1 comment .', '2015-09-16 02:36:25', 0),
+(4, 1, 'giang', 'nguyenthanhgiang92@gmail.com', 'asdasdsa', '2015-09-17 08:10:28', 1),
+(5, 1, 'giang', 'nguyenthanhgiang92@gmail.com', 'asdasdas', '2015-09-17 08:11:08', 0),
+(6, 2, 'giang', 'nguyenthanhgiang92@gmail.com', 'ASasA', '2015-09-17 08:14:15', 1);
 
 -- --------------------------------------------------------
 
@@ -59,15 +63,15 @@ CREATE TABLE IF NOT EXISTS `entry` (
   `entry_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `comment_count` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`entry_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
 
 --
 -- Dumping data for table `entry`
 --
 
 INSERT INTO `entry` (`entry_id`, `author_id`, `entry_name`, `entry_body`, `entry_date`, `comment_count`) VALUES
-(1, 1, 'Codeigniter Tutorial 1', '<p>Synergistically e-enable sticky synergy for future-proof technology. Quickly enhance resource maximizing meta-services with intermandated methods of empowerment. Interactively network user-centric interfaces without empowered users. Holisticly procrastinate bricks-and-clicks core competencies and progressive channels. Globally repurpose next-generation resources and premier e-services.</p>\r\n\r\n<p>Continually matrix process-centric markets via web-enabled niche markets. Dramatically impact orthogonal methods of empowerment vis-a-vis sustainable mindshare. Efficiently leverage existing bleeding-edge value with parallel quality vectors. Continually visualize end-to-end intellectual capital before multifunctional e-tailers. Collaboratively aggregate 2.0 markets through front-end human capital.</p>', '2012-02-08 14:34:45', 2),
-(2, 1, 'Download free theme!', '<p>Holisticly customize reliable intellectual capital with magnetic infomediaries. Quickly customize multidisciplinary potentialities without end-to-end users. Intrinsicly build global applications vis-a-vis reliable expertise. Completely engage focused experiences rather than professional networks. Seamlessly actualize customer directed methods of empowerment for impactful platforms.</p>\r\n\r\n<p>Compellingly re-engineer leading-edge meta-services with progressive architectures. Efficiently harness an expanded array of materials without strategic e-markets. Conveniently harness enabled portals with e-business platforms. Synergistically e-enable B2C strategic theme areas after interdependent e-commerce. Interactively network bricks-and-clicks leadership whereas high standards in e-business.</p>', '2012-02-08 15:51:47', 0);
+(8, 1, 'Insert - Update - Delete  CI', '<p>Through our&nbsp;previous&nbsp;post, you have learnt to insert data in database using CodeIgniter framework.</p>\r\n\r\n<p>In this tutorial we&nbsp;explain&nbsp;you how to delete data from database using CodeIgniter framework.</p>\r\n', '2015-09-17 23:25:08', 0),
+(9, 1, 'Continuous integration', '<p><strong>Continuous integration</strong>&nbsp;(<strong>CI</strong>) is the practice, in&nbsp;<a href="https://en.wikipedia.org/wiki/Software_engineering" title="Software engineering">software engineering</a>, of merging all developer working copies to a shared&nbsp;<a href="https://en.wikipedia.org/wiki/Trunk_(software)" title="Trunk (software)">mainline</a>&nbsp;several times a day. It was first named and proposed by&nbsp;<a href="https://en.wikipedia.org/wiki/Grady_Booch" title="Grady Booch">Grady Booch</a>&nbsp;in his 1991&nbsp;<a href="https://en.wikipedia.org/wiki/Booch_method" title="Booch method">method</a>,<sup><a href="https://en.wikipedia.org/wiki/Continuous_integration#cite_note-1">[1]</a></sup>&nbsp;although Booch did not advocate integrating several times a day.&nbsp;</p>\r\n', '2015-09-18 04:41:23', 0);
 
 -- --------------------------------------------------------
 
@@ -80,18 +84,14 @@ CREATE TABLE IF NOT EXISTS `entry_category` (
   `category_name` varchar(150) NOT NULL,
   `slug` varchar(150) NOT NULL,
   PRIMARY KEY (`category_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 --
 -- Dumping data for table `entry_category`
 --
 
 INSERT INTO `entry_category` (`category_id`, `category_name`, `slug`) VALUES
-(1, 'Tutorial', 'tutorial'),
-(2, 'Freebie', 'freebie'),
-(3, 'CodeIgniter', 'codeigniter'),
-(4, 'Joomla', 'joomla'),
-(5, 'Wordpress', 'wordpress');
+(3, 'CodeIgniter', 'codeigniter');
 
 -- --------------------------------------------------------
 
@@ -104,7 +104,7 @@ CREATE TABLE IF NOT EXISTS `entry_relationships` (
   `object_id` int(11) NOT NULL,
   `category_id` int(11) NOT NULL,
   PRIMARY KEY (`relationship_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
 
 --
 -- Dumping data for table `entry_relationships`
@@ -115,7 +115,12 @@ INSERT INTO `entry_relationships` (`relationship_id`, `object_id`, `category_id`
 (2, 1, 3),
 (3, 2, 1),
 (4, 2, 4),
-(5, 2, 5);
+(5, 2, 5),
+(6, 3, 3),
+(7, 3, 3),
+(8, 4, 3),
+(9, 5, 3),
+(10, 6, 3);
 
 -- --------------------------------------------------------
 
@@ -169,7 +174,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 
 INSERT INTO `users` (`id`, `ip_address`, `username`, `password`, `salt`, `email`, `activation_code`, `forgotten_password_code`, `remember_code`, `created_on`, `last_login`, `active`, `first_name`, `last_name`, `company`, `phone`) VALUES
-(1, 2130706433, 'administrator', '59beecdf7fc966e2f17fd8f65a4a9aeb09d4a3d4', '9462e8eee0', 'admin@admin.com', '', NULL, '9d029802e28cd9c768e8e62277c0df49ec65c48c', 1268889823, 1329009722, 1, 'Admin', 'istrator', 'ADMIN', '0');
+(1, 2130706433, 'giang', '59beecdf7fc966e2f17fd8f65a4a9aeb09d4a3d4', '9462e8eee0', 'nguyenthanhgiang92@gmail.com', '', NULL, '9d029802e28cd9c768e8e62277c0df49ec65c48c', 1268889823, 1442558158, 1, 'Admin', 'istrator', 'ADMIN', '0');
 
 -- --------------------------------------------------------
 
