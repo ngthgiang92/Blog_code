@@ -1,6 +1,6 @@
 <html>
 <head>
-	<title>Login &rarr; <?php echo $this->config->item('site_title', 'ion_auth')?></title>
+	<title>Login</title>
 	<link rel="stylesheet" href="<?php echo base_url();?>assets/css/unbound.css" type="text/css" />
 </head>
 <body>

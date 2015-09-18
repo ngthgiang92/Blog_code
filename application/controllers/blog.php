@@ -9,7 +9,7 @@ class Blog extends CI_Controller {
 
 	public function index()
 	{
-		$data['title'] = 'Home - '.$this->config->item('site_title', 'ion_auth');
+		$data['title'] = 'Home';
 		
 		$data['current'] = 'HOME';
 		$data['posts'] = $this->blog_model->get_posts();
@@ -21,7 +21,7 @@ class Blog extends CI_Controller {
 	
 	public function about()
 	{
-		$data['title'] = 'About - '.$this->config->item('site_title', 'ion_auth');
+		$data['title'] = 'About';
 		$data['current'] = 'ABOUT';
 		$data['categories'] = $this->blog_model->get_categories();
 		$this->load->view('blog/about',$data);
@@ -49,7 +49,7 @@ class Blog extends CI_Controller {
 		{
 			foreach($this->blog_model->get_post($id) as $row)
 			{
-				$data['title'] = $row->entry_name.' - '.$this->config->item('site_title', 'ion_auth');
+				$data['title'] = $row->entry_name.'';
 			}
 			
 			if ($this->form_validation->run() == FALSE)
@@ -85,8 +85,8 @@ class Blog extends CI_Controller {
 		}
 		else
 		{
-			$data['title'] = 'Add new entry - '.$this->config->item('site_title', 'ion_auth');
-			$data['categories'] = $this->blog_model->get_categories();
+			$data['title'] = 'Add new entry';
+			//$data['categories'] = $this->blog_model->get_categories();
 			
 			$this->load->helper('form');
 			$this->load->library(array('form_validation'));
@@ -94,7 +94,7 @@ class Blog extends CI_Controller {
 			//set validation rules
 			$this->form_validation->set_rules('entry_name', 'Title', 'required|max_length[200]|xss_clean');
 			$this->form_validation->set_rules('entry_body', 'Body', 'required|xss_clean');
-			$this->form_validation->set_rules('entry_category', 'Category', 'required');
+			//$this->form_validation->set_rules('entry_category', 'Category', 'required');
 			
 			if ($this->form_validation->run() == FALSE)
 			{
@@ -107,9 +107,9 @@ class Blog extends CI_Controller {
 				$user = $this->ion_auth->user()->row();
 				$title = $this->input->post('entry_name');
 				$body = $this->input->post('entry_body');
-				$categories = $this->input->post('entry_category');
+			//	$categories = $this->input->post('entry_category');
 				
-				$this->blog_model->add_new_entry($user->id,$title,$body,$categories);
+				$this->blog_model->add_new_entry($user->id,$title,$body/*$categories*/);
 				$this->session->set_flashdata('message', '1 new post added!');
 				redirect('add-new-entry');
 			}
@@ -118,7 +118,7 @@ class Blog extends CI_Controller {
 	
 	public function add_new_category()
 	{
-		$data['title'] = 'Add new category - '.$this->config->item('site_title', 'ion_auth');
+		$data['title'] = 'Add new category';
 		
 		if( ! $this->ion_auth->logged_in() && ! $this->ion_auth->is_admin() ) // block un-authorized access
 		{
@@ -156,6 +156,7 @@ class Blog extends CI_Controller {
 	}
     public function list_post()
     {
+        $data['title'] = 'List post admin';
         if( ! $this->ion_auth->logged_in() && ! $this->ion_auth->is_admin() ) // block un-authorized access
 		{
 			show_404();
@@ -168,7 +169,7 @@ class Blog extends CI_Controller {
     }
 	public function category($slug = FALSE)
 	{
-		$data['title'] = 'Category - '.$this->config->item('site_title', 'ion_auth');
+		$data['title'] = 'Category';
 		$data['categories'] = $this->blog_model->get_categories();
 		
 		if( $slug == FALSE )
@@ -182,6 +183,7 @@ class Blog extends CI_Controller {
 	}
     public function search()
     {
+        $data['title'] = 'Search box';
         if( ! $this->ion_auth->logged_in() && ! $this->ion_auth->is_admin() ) // block un-authorized access
 		{
 			show_404();
@@ -191,6 +193,54 @@ class Blog extends CI_Controller {
             $function_name = $this->input->get('qsearch');
             $data['data'] = $this->blog_model->getSearchResults($function_name);
             $this->load->view('admin/search',$data);
+        }
+    }
+    public function edit($id)
+    {
+        $data['title'] = 'Edit list post';
+        if( ! $this->ion_auth->logged_in() && ! $this->ion_auth->is_admin() )
+		{
+			show_404();
+		}
+		else
+		{
+            $data['data'] = $this->blog_model->get_edit($id);
+            $this->load->view('admin/edit_category',$data);
+        }
+    }
+    public function update_entry($id)
+    {
+        $data['title'] = 'Update entry';
+        if( ! $this->ion_auth->logged_in() && ! $this->ion_auth->is_admin() ) // block un-authorized access
+		{
+			show_404();
+		}
+		else
+		{
+		  
+			$data = array(
+            'entry_name'=>$this->input->post('entry_name'),
+            'entry_body'=>$this->input->post('entry_body'),
+            'entry_date'=>date('Y-m-d H:i:s'),
+            );
+            $this->blog_model->update($id,$data);
+            $data_list['data_list'] = $this->blog_model->get_list_entry();
+            $this->load->view('admin/success_update',$data_list);
+            
+		}
+    }
+    public function delete_entry($id)
+    {
+        $data['title'] = 'Delete entry';
+        if( ! $this->ion_auth->logged_in() && ! $this->ion_auth->is_admin() ) // block un-authorized access
+		{
+			show_404();
+		}
+		else
+		{
+		  $data =  $this->blog_model->delete_entry($id);
+          $data_list['data_list'] = $this->blog_model->get_list_entry();
+          $this->load->view('admin/success_delete',$data_list);
         }
     }
 }

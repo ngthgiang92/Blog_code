@@ -7,18 +7,11 @@ class Blog_model extends CI_Model {
 		$query = $this->db->get('entry');
 		return $query->result();
 	}
-	public function update($params)
+	public function update($id,$data)
     {
-        $fields = array(
-        'entry_name'=>$params['entry_name'],
-        'entry_body'=>$params['entry_body'],
-        'entry_date'=>date('Y-m-d H:i:s')
-        );
-        //code insert here .
-        
-        $this->db->insert('entry',$fields);
+       $this->db->where('entry_id',$id);
+       $this->db->update('entry',$data);
     }
-    /*`entry_id`, `author_id`, `entry_name`, `entry_body`, `entry_date`, `comment_count`*/
 	function add_new_entry($author,$name,$body,$categories)
 	{
 	   
@@ -214,6 +207,19 @@ class Blog_model extends CI_Model {
         }else{
             return '<p>Sorry, no results returned</p>';
         }
+    }
+    function get_edit($id)
+    {
+        $this->db->select('*');
+        $this->db->from('entry');
+        $this->db->where('entry_id',$id);
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+    function delete_entry($id)
+    {
+        $this->db->where('entry_id',$id);
+        $this->db->delete('entry');
     }
 }
 

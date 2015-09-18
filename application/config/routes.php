@@ -48,6 +48,9 @@ $route['search'] = 'blog/search';
 $route['list_post'] = 'blog/list_post';
 $route['category/(:any)'] = "blog/category/$1";
 $route['post/(:num)'] = 'blog/post/$1';
+$route['edit/(:num)'] = 'blog/edit/$1';
+$route['update_entry/(:num)'] = 'blog/update_entry/$1';
+$route['delete_entry/(:num)'] = 'blog/delete_entry/$1';
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

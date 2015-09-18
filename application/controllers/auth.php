@@ -15,7 +15,7 @@ class Auth extends CI_Controller {
 	//redirect if needed, otherwise display the user list
 	function index()
 	{
-		$data['title'] = 'Dashboard - '.$this->config->item('site_title', 'ion_auth');
+		$data['title'] = 'Dashboard ';
 		
 		if (!$this->ion_auth->logged_in())
 		{
@@ -58,10 +58,8 @@ class Auth extends CI_Controller {
 			}
 		}
 		else
-		{  //the user is not logging in so display the login page
-			//set the flash data error message if there is one
+		{
 			$this->data['message'] = (validation_errors()) ? validation_errors('<p class="error">','</p>') : $this->session->flashdata('message');
-
 			$this->data['identity'] = array('name' => 'identity',
 				'id' => 'identity',
 				'type' => 'text',
